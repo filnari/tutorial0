@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import org.filnari.tutorial0.blocks.FirstBlock;
 import org.filnari.tutorial0.blocks.ModBlocks;
 import org.filnari.tutorial0.setup.ClientProxy;
+import org.filnari.tutorial0.setup.ModSetup;
 import org.filnari.tutorial0.setup.ServerProxy;
 import org.filnari.tutorial0.setup.iProxy;
 
@@ -33,6 +34,8 @@ public class Tutorial0 {
     // safeRunForDist was runForDist, but it's deprecated.
     public static iProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
+    public static ModSetup setup = new ModSetup();
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     public Tutorial0() {
@@ -41,6 +44,8 @@ public class Tutorial0 {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
+        setup.init();
+        proxy.init();
     }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
@@ -53,7 +58,9 @@ public class Tutorial0 {
         }
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
-            event.getRegistry().register(new BlockItem(ModBlocks.FIRSTBLOCK, new Item.Properties()).setRegistryName("firstblock"));
+            Item.Properties properties = new Item.Properties()
+                    .group(setup.itemGroup);
+            event.getRegistry().register(new BlockItem(ModBlocks.FIRSTBLOCK, properties).setRegistryName("firstblock"));
         }
     }
 }

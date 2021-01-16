@@ -5,7 +5,12 @@ import net.minecraft.world.World;
 public class ServerProxy implements iProxy {
 
     @Override
+    public void init() {
+
+    }
+
+    @Override
     public World getClientWorld() {
-        throw new IllegalStateException("Only run this on the client!");
+        throw new IllegalStateException("Only run this ");
     }
 }

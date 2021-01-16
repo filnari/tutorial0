@@ -6,6 +6,11 @@ import net.minecraft.world.World;
 public class ClientProxy implements iProxy {
 
     @Override
+    public void init() {
+
+    }
+
+    @Override
     public World getClientWorld() {
         return Minecraft.getInstance().world;
     }
